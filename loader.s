@@ -7,7 +7,7 @@ MAGIC		equ 0x1BADB002			; Magic number for the bootloader
 CHECKSUM	equ -(MAGIC + FLAGS)		; CHECKSUM + MAGIC + FLAGS = 0
 
 ; Write the multiboot header in memory
-section .text
+section .multiboot
 global _start
 align 4
     dd MAGIC
