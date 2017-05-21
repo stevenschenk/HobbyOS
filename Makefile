@@ -1,9 +1,9 @@
-OBJECTS = boot.o kernel.o console.o
+OBJECTS = loader.o kernel.o console.o
 CC = i686-elf-gcc
 CFLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I./include -c
 LDFLAGS = -T linker.ld -ffreestanding -O2 -nostdlib -lgcc
-AS = i686-elf-as
-ASFLAGS = 
+AS = nasm
+ASFLAGS =-f elf32 
 
 all: hobbyos.bin
 
