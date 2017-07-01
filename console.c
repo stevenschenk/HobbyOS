@@ -1,4 +1,5 @@
 #include <console.h>
+#include <string.h>
 
 /*
  *  Output on screen is done via Memory Mapped I/O.
@@ -31,23 +32,26 @@ size_t terminal_column;         /* Current column index */
 uint8_t terminal_color;         /* Color of the terminal fg + bg */
 uint8_t* terminal_buffer;       /* Pointer to the first address of the video memory */
 
-size_t strlen(const char* str) {
-	size_t len = 0;
-	while (str[len])
-		len++;
-	return len;
+// size_t strlen(const char* str) {
+// 	size_t len = 0;
+// 	while (str[len])
+// 		len++;
+// 	return len;
+// }
+
+void terminal_clear() {
+    terminal_row = 0;
+    terminal_column = 0;
+    for(uint16_t x = 0; x < TERMINAL_WIDTH * TERMINAL_HEIGHT * 2; x++) {
+        terminal_buffer[x] = ' ';
+        terminal_buffer[++x] = TERMINAL_DEFAULT_COLOR; 
+    }
 }
 
 void terminal_initialize() {
-    terminal_row = 0;
-    terminal_column = 0;
     terminal_color = TERMINAL_DEFAULT_COLOR;
     terminal_buffer = (uint8_t*) 0xB8000;
-
-    for(uint16_t x = 0; x < TERMINAL_WIDTH * TERMINAL_HEIGHT * 2; x++) {
-        terminal_buffer[x] = 0x41;
-        terminal_buffer[++x] = TERMINAL_DEFAULT_COLOR; 
-    }
+    terminal_clear();
 }
 
 void terminal_set_color(enum vga_color fg, enum vga_color bg) {
@@ -74,7 +78,7 @@ void terminal_write_char_at(char c, uint8_t terminal_row, uint8_t terminal_colum
     terminal_buffer[++index] = terminal_color;
 }
 
-void terminal_write_string(const char * text) {
+void terminal_write_string(char * text) {
     size_t len = strlen(text);
     for(uint16_t i = 0; i < len; i++)
         terminal_write_char(text[i]);

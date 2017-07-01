@@ -32,7 +32,8 @@ extern void terminal_initialize();
 extern void terminal_set_color(enum vga_color fg, enum vga_color bg);
 extern void terminal_write_char(char c);
 extern void terminal_write_char_at(char c, uint8_t terminal_row, uint8_t terminal_column);
-extern void terminal_write_string(const char * text);
+extern void terminal_write_string(char * text);
+extern void terminal_clear();
 //TODO: Update cursor position (http://wiki.osdev.org/Text_Mode_Cursor)
 
 #endif

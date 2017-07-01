@@ -1,4 +1,4 @@
-OBJECTS = loader.o kernel.o console.o
+OBJECTS = loader.o kernel.o console.o string.o io.o keyboard.o
 CC = i686-elf-gcc
 CFLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I./include -c
 LDFLAGS = -T linker.ld -ffreestanding -O2 -nostdlib -lgcc
