@@ -33,6 +33,9 @@ void kernel_main(void) {
 		} 
 		else if(strcmp(command, "hello")) {
 			terminal_write_string("\nHello there! I am ready for orders!");
+		} 
+		else {
+			terminal_write_string("\nWoops! I do not know what that is!");
 		}
 	}	
 }

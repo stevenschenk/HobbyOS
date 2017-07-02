@@ -1,5 +1,6 @@
 #include <console.h>
 #include <string.h>
+#include <io.h>
 
 /*
  *  Output on screen is done via Memory Mapped I/O.
@@ -32,12 +33,13 @@ size_t terminal_column;         /* Current column index */
 uint8_t terminal_color;         /* Color of the terminal fg + bg */
 uint8_t* terminal_buffer;       /* Pointer to the first address of the video memory */
 
-// size_t strlen(const char* str) {
-// 	size_t len = 0;
-// 	while (str[len])
-// 		len++;
-// 	return len;
-// }
+void terminal_move_cursor(uint16_t pos)
+{
+    outb(FB_COMMAND_PORT, FB_HIGH_BYTE_COMMAND);
+    outb(FB_DATA_PORT,    ((pos >> 8) & 0x00FF));
+    outb(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
+    outb(FB_DATA_PORT,    pos & 0x00FF);
+}
 
 void terminal_clear() {
     terminal_row = 0;
@@ -70,6 +72,8 @@ void terminal_write_char(char c) {
         terminal_row++;
         terminal_column = 0;
     }
+    terminal_move_cursor((terminal_row * 80) + terminal_column);
+
 }
 
 void terminal_write_char_at(char c, uint8_t terminal_row, uint8_t terminal_column) {

@@ -14,9 +14,12 @@ string readString() {
 
 	while(1) {
 		if(inb(0x64) & 0x1) {
+
 			char code = inb(0x60);
+
 			if(code & 0x80) continue;
 			if(code == 0x1c) break;
+
 			char c = getchar(code);
 			buffstring[index++] = c;
 			terminal_write_char(c);

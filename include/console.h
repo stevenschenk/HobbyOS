@@ -34,6 +34,8 @@ extern void terminal_write_char(char c);
 extern void terminal_write_char_at(char c, uint8_t terminal_row, uint8_t terminal_column);
 extern void terminal_write_string(char * text);
 extern void terminal_clear();
+extern void terminal_move_cursor(uint16_t pos);
+  
 //TODO: Update cursor position (http://wiki.osdev.org/Text_Mode_Cursor)
 
 #endif
